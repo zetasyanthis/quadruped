@@ -1,0 +1,7 @@
+Quadruplex Ethernet adapter:
+mac: 00:50:b6:06:17:05
+
+Quadruplex Wi-Fi adapter:
+mac: 00:22:75:ad:93:1b
+
+

@@ -1,0 +1,33 @@
+MKSHELL=rc
+CC = gcc
+CCOPTS = -std=gnu99 -Wall `{pkg-config --cflags glib-2.0} -DBEAGLEBOARD=1 -ggdb
+LDFLAGS=`{pkg-config --libs --cflags glib-2.0} -lm
+COMMON = \
+   rx28.o \
+   rs485.o \
+   rx28_simple.o \
+#   gpio.o \
+
+
+default:V: stand.bin test.bin
+
+torque-off.bin:: $COMMON torque-off.o 
+   $CC $LDFLAGS -o $target $prereq
+
+stand.bin:: $COMMON stand.o static_motion.o
+   $CC $LDFLAGS -o $target $prereq
+
+test.bin:: $COMMON test.o rx28_simple.o
+   $CC $LDFLAGS -o $target $prereq
+
+#%.bin::%.o $COMMON
+#   $CC $LDFLAGS -o $target $prereq
+
+%.o::%.c
+   $CC $CCOPTS -c $prereq
+
+clean:V:
+   rm -f *.o *.bin
+
+
+

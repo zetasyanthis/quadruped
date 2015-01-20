@@ -1,0 +1,16 @@
+Use make to build the executable software, and 
+make docs to build the documentation.
+
+Packages required:
+ * libglib2.0-dev
+ * cwiid-dev
+ * matplotlib
+ * pybrain
+ * python-scipy
+
+Also required to build the docs:
+ * inkscape
+
+Also required for the Wiimote daemon:
+ * python-cwiid
+

@@ -1,0 +1,118 @@
+From 51b53ac9d49ba8a89299f2e6cc8f2c9f4e63ef54 Mon Sep 17 00:00:00 2001
+From: Michael Auchter <michael.auchter@gmail.com>
+Date: Fri, 5 Feb 2010 14:14:28 +0000
+Subject: [PATCH 8/9] serial_core: removed commented out rs485 code
+
+Removed the commented out jiffy-based timing code from serial_core.c since the
+hrtimer replacement has been tested
+---
+ drivers/serial/serial_core.c |   39 ++++++++++++++++-----------------------
+ 1 files changed, 16 insertions(+), 23 deletions(-)
+
+diff --git a/drivers/serial/serial_core.c b/drivers/serial/serial_core.c
+index 244c1de..e8dbaed 100644
+--- a/drivers/serial/serial_core.c
++++ b/drivers/serial/serial_core.c
+@@ -494,11 +494,6 @@ static void direction_control_init(struct tty_struct *tty)
+ 	struct uart_port *port = state->uart_port;
+ 	struct serial_rs485 *rs = &port->rs485;
+ 
+-	/*
+-	init_timer(&rs->pre_post_timer);
+-	rs->pre_post_timer.function = NULL;
+-	rs->pre_post_timer.data = (unsigned long)tty;
+-	*/
+ 	hrtimer_init(&rs->hr_pre_post_timer, CLOCK_MONOTONIC, HRTIMER_MODE_REL);
+ 	rs->hr_pre_post_timer.function = NULL;
+ 	rs->tty = tty;
+@@ -519,7 +514,8 @@ static void direction_control_init(struct tty_struct *tty)
+  **/
+ static enum hrtimer_restart direction_control_timed_post_xmit(struct hrtimer *timer)
+ {
+-	struct serial_rs485 *rs = container_of(timer, struct serial_rs485, hr_pre_post_timer);
++	struct serial_rs485 *rs = container_of(timer, struct serial_rs485,
++			hr_pre_post_timer);
+ 	struct uart_port *port = container_of(rs, struct uart_port, rs485);
+ 
+ 	uart_update_mctrl(port,
+@@ -541,7 +537,8 @@ static enum hrtimer_restart direction_control_timed_post_xmit(struct hrtimer *ti
+  **/
+ static enum hrtimer_restart direction_control_timed_xmit_end_detect(struct hrtimer *timer)
+ {
+-	struct serial_rs485 *rs = container_of(timer, struct serial_rs485, hr_pre_post_timer);
++	struct serial_rs485 *rs = container_of(timer, struct serial_rs485,
++			hr_pre_post_timer);
+ 	struct uart_port *port = container_of(rs, struct uart_port, rs485);
+ 
+ 	if (port->ops->tx_empty(port)) {
+@@ -550,10 +547,9 @@ static enum hrtimer_restart direction_control_timed_xmit_end_detect(struct hrtim
+ 			 * Schedule line turn around after required delay.
+ 			 */
+ 			rs->hr_pre_post_timer.function =
+-				direction_control_timed_post_xmit;
+-			//rs->pre_post_timer.expires = jiffies + rs->post_jiffies;
+-			//add_timer(&rs->pre_post_timer);
+-			hrtimer_start(&rs->hr_pre_post_timer, ktime_set(0, rs->post_usecs), HRTIMER_MODE_REL);
++					direction_control_timed_post_xmit;
++			hrtimer_start(&rs->hr_pre_post_timer,
++					ktime_set(0, rs->post_usecs), HRTIMER_MODE_REL);
+ 		} else {
+ 			/*
+ 			 * No delay required turn line around now.
+@@ -564,8 +560,8 @@ static enum hrtimer_restart direction_control_timed_xmit_end_detect(struct hrtim
+ 		/* 
+ 		 * Transmission not finished, so try again next jiffy.
+ 		 */
+-		//add_timer(&rs->pre_post_timer);
+-		hrtimer_start(&rs->hr_pre_post_timer, ktime_set(0, rs->post_usecs), HRTIMER_MODE_REL);
++		hrtimer_start(&rs->hr_pre_post_timer, ktime_set(0, rs->post_usecs),
++				HRTIMER_MODE_REL);
+ 	}
+ 	return HRTIMER_NORESTART;
+ }
+@@ -582,12 +578,14 @@ static enum hrtimer_restart direction_control_timed_xmit_end_detect(struct hrtim
+  */
+ static enum hrtimer_restart direction_control_timed_start_xmit(struct hrtimer *timer)
+ {
+-	struct serial_rs485 *rs = container_of(timer, struct serial_rs485, hr_pre_post_timer);
++	struct serial_rs485 *rs = container_of(timer, struct serial_rs485,
++			hr_pre_post_timer);
+ 	struct uart_port *port = container_of(rs, struct uart_port, rs485);
+ 	unsigned long flags;
+ 
+ 	rs->hr_pre_post_timer.function = direction_control_timed_xmit_end_detect;
+-	hrtimer_start(&rs->hr_pre_post_timer, ktime_set(0, rs->post_usecs), HRTIMER_MODE_REL);
++	hrtimer_start(&rs->hr_pre_post_timer, ktime_set(0, rs->post_usecs),
++			HRTIMER_MODE_REL);
+ 
+ 
+ 	spin_lock_irqsave(&port->lock, flags);
+@@ -622,14 +620,10 @@ static void direction_control_uart_start(struct tty_struct *tty)
+ 			/*
+ 			 * Pre transmission delay required, schedule timer.
+ 			 */
+-			//rs->pre_post_timer.function =
+-			//    direction_control_timed_start_xmit;
+-			//rs->pre_post_timer.expires = jiffies + rs->pre_jiffies;
+-			//add_timer(&rs->pre_post_timer);
+-			
+ 			rs->hr_pre_post_timer.function =
+-			    direction_control_timed_start_xmit;
+-			hrtimer_start(&rs->hr_pre_post_timer, ktime_set(0, rs->pre_usecs), HRTIMER_MODE_REL);
++					direction_control_timed_start_xmit;
++			hrtimer_start(&rs->hr_pre_post_timer, ktime_set(0, rs->pre_usecs),
++					HRTIMER_MODE_REL);
+ 
+ 
+ 		} else {
+@@ -649,7 +643,6 @@ static void direction_control_uart_start(struct tty_struct *tty)
+ 		 * Transmitting or in post transmit delay, reschedule the end 
+ 		 * of transmission polling.
+ 		 */
+-		//del_timer(&port->rs485.pre_post_timer);
+ 		hrtimer_cancel(&port->rs485.hr_pre_post_timer);
+ 		direction_control_timed_start_xmit(&rs->hr_pre_post_timer);
+ 	}
+-- 
+1.6.4.4
+

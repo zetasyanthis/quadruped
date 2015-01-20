@@ -1,0 +1,87 @@
+Packet Storage
+	duration (in 10 ms), motorID, thetaL, thetaH
+
+B1
+	10	duration
+	0
+	0
+	0
+	0
+	autopoll based on +-20% delay and 5% increments
+		1.	wait duration -20%
+		2.	send poll to check if the last command has moved
+		3.	repeat until complete or +20%, at which time just start moving
+B2
+	10	duration
+	0
+	0
+	0
+	0
+	autopoll based on +-20% delay and 5% increments
+B3
+	10	duration
+	0
+	0
+	0
+	0
+	autopoll based on +-20% delay and 5% increments
+
+
+To do
+	1.	IR path modification
+	2.	State machine rewrite
+			Mode 0:	Speed calc based on duration.
+			Mode 1:	Speed calc based on fastest they can be done.
+	3.	Sonar/camera/gun sweep and path generation / firing
+
+If command complete
+	byteNum = 0;
+	commandNum++
+	If speed mode and not done
+		set up next packet
+		set returnLength, commandLength
+		Send first byte of next speed setting command
+		return;
+	If burst complete
+		commandNum = 0;
+		If complex complete
+			If path complete
+				Exit
+			Else
+				Swap to next complex command
+				Update motor positions
+				Set newComplex flag
+		If(polling)
+			If motor moving and not elapsed
+				Reset timer to 5% to send again
+			Else
+				If(!speed mode)
+					If newComplex flag is set
+						Clear the flag
+					Else
+						Update motor pos like normal
+				Calc speeds and save prev pointer
+				Set speed flag, length of speed burst
+				Send first byte of speed setting burst
+				Else
+					clear speed flag
+					reset pointer to proper position
+					commandNum = 0;
+					burstNum++;
+					Send first byte of next burst
+		Else
+			Set up polling for 80% and send 
+	Else
+	Send first byte of next command.
+
+
+
+(180,120) is the center
+2.7m distance -> 2.4m field of view
+
+speedBuffer[i][0] = motorsUsed[i];
+							newSpeed = (int)(((float)abs(motorPosition[motorsUsed[i]][bufferSwap] - motorPosition[motorsUsed[i]][!bufferSwap]))*(float)910/((float)(duration[burstNum])*(float)10));
+							// 835.23
+							if(newSpeed > 1023) newSpeed = 1023;
+							speedBuffer[i][1] = (unsigned char) (newSpeed & 0x00FF);
+							speedBuffer[i][2] = (unsigned char) ((newSpeed & 0xFF00) >> 8);

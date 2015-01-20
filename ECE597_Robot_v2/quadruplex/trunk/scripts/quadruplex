@@ -1,0 +1,27 @@
+#!/bin/sh
+#
+# init script for quadruplex hardware
+
+gpio_init_script=/home/tomwm/trunk/scripts/init_gpio.sh
+
+test -f "$gpio_init_script" || exit 0
+
+case "$1" in
+    start)
+        echo "Initializing GPIO"
+        $gpio_init_script
+        ;;
+    stop)
+        echo "Stopping is not supported"
+        exit 1
+        ;;
+    restart)
+        $0 stop
+        $0 start
+        ;;
+    *)
+        echo "Usage: $0 {start}"
+        ;;
+esac
+
+exit 0

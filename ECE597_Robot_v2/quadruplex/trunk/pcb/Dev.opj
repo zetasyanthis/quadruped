@@ -1,0 +1,284 @@
+(ExpressProject "Dev"
+  (ProjectVersion "19981106")
+  (ProjectType "Analog or A/D Mixed Mode")
+  (Folder "Design Resources"
+    (Folder "Library"
+      (File ".\tps5420d.olb"
+        (DisplayName ".\tps5420d.olb")
+        (Type "Schematic Library"))
+      (File ".\dev-pspicefiles\dev.olb"
+        (DisplayName ".\dev-pspicefiles\dev.olb")
+        (Type "Schematic Library"))
+      (File ".\dev.olb"
+        (Type "Schematic Library")))
+    (NoModify)
+    (File ".\dev.dsn"
+      (Type "Schematic Design"))
+    (BuildFileAddedOrDeleted "x")
+    (CompileFileAddedOrDeleted "x")
+    (Netlist_TAB "0")
+    (Create Allegro Netlist "TRUE")
+    (Allegro Netlist Directory "allegro")
+    (View Allegro Netlist Files "FALSE")
+    (Update Allegro Board "TRUE")
+    (Allegro Netlist Output Board File "allegro\dev.brd")
+    (Allegro Netlist Remove Etch "FALSE")
+    (Allegro Netlist Place Changed Component "ALWAYS_REPLACE")
+    (Allegro Netlist Open Board in Allegro "NEITHER")
+    (Allegro Setup Configuration File
+       "C:\OrCAD\OrCAD_16.2\tools\capture\allegro.cfg")
+    (Allegro Setup Backup Versions "3")
+    (Allegro Netlist Combine Property String "PCB Footprint")
+    (Allegro Netlist Ignore Fixed Property "FALSE")
+    (Allegro Netlist User Defined Property "FALSE")
+    (Allegro Netlist Input Board File "allegro\dev.brd")
+    (Board_sim_option "VHDL_flow")
+    (ANNOTATE_Scope "0")
+    (ANNOTATE_Mode "1")
+    (ANNOTATE_Action "0")
+    (Annotate_Page_Order "0")
+    (ANNOTATE_Reset_References_to_1 "FALSE")
+    (ANNOTATE_No_Page_Number_Change "FALSE")
+    (ANNOTATE_Property_Combine "{Value}{Source Package}{POWER_GROUP}")
+    (ANNOTATE_IncludeNonPrimitive "TRUE")
+    (ANNOTATE_Refdes_Control_Required "FALSE")
+    (Annotate_type "Default")
+    (width_pages "100")
+    (width_start "80")
+    (width_End "80")
+    (BOM_Scope "0")
+    (BOM_Mode "0")
+    (BOM_Report_File "C:\USERS\BATYDM\DOCUMENTS\COURSES\QUAD\TRUNK\PCB\DEV.BOM")
+    (BOM_Merge_Include "FALSE")
+    (BOM_Property_Combine_7.0 "{Item}\t{Quantity}\t{Reference}\t{Value}")
+    (BOM_Header "Item\tQuantity\tReference\tPart")
+    (BOM_Include_File
+       "C:\USERS\BATYDM\DOCUMENTS\COURSES\QUAD\TRUNK\PCB\DEV.INC")
+    (BOM_Include_File_Combine_7.0 "{Item}\t{Quantity}\t{Reference}\t{Value}")
+    (BOM_One_Part_Per_Line "FALSE")
+    (Open_BOM_in_Excel "FALSE")
+    (BOM_View_Output "FALSE")
+    ("Create Allegro Netlist" "TRUE")
+    ("Allegro Netlist Directory" "allegro")
+    ("View Allegro Netlist Files" "FALSE")
+    ("Update Allegro Board" "TRUE")
+    ("Allegro Netlist Input Board File" "dev.brd")
+    ("Allegro Netlist Output Board File" "dev.brd")
+    ("Allegro Netlist Remove Etch" "FALSE")
+    ("Allegro Netlist Place Changed Component" "ALWAYS_REPLACE")
+    ("Allegro Netlist Open Board in Allegro" "NEITHER")
+    ("Allegro Setup Configuration File"
+       "C:\OrCAD\OrCAD_16.2\tools\capture\allegro.cfg")
+    ("Allegro Setup Backup Versions" "3")
+    ("Allegro Netlist Combine Property String" "PCB Footprint")
+    ("Allegro Netlist Ignore Fixed Property" "TRUE")
+    ("Allegro Netlist User Defined Property" "FALSE")
+    (DRC_Scope "0")
+    (DRC_Action "0")
+    (DRC_Create_Warnings "FALSE")
+    (DRC_Check_Ports "FALSE")
+    (DRC_Check_Off-Page_Connectors "FALSE")
+    (DRC_Identical_References "TRUE")
+    (DRC_Type_Mismatch "TRUE")
+    (DRC_Report_Ports_and_Off-page_Connectors "FALSE")
+    (DRC_SDT_Compatibility "FALSE")
+    (DRC_Report_Off-grid_Objects "FALSE")
+    (DRC_Check_Unconnected_Nets "TRUE")
+    (DRC_Check_for_Misleading_TAP "FALSE")
+    (DRC_Visible_Power_pins "FALSE")
+    (DRC_Report_Netnames "FALSE")
+    (DRC_View_Output "FALSE")
+    (DRC_Report_File
+       "C:\DOCUMENTS AND SETTINGS\BATYDM\MY DOCUMENTS\COURSES\QUAD\TRUNK\PCB\DEV.DRC"))
+  (Folder "Outputs"
+    (File ".\allegro\pstxnet.dat"
+      (Type "Report")
+      (DisplayName "pstxnet.dat"))
+    (File ".\allegro\pstxprt.dat"
+      (Type "Report")
+      (DisplayName "pstxprt.dat"))
+    (File ".\allegro\pstchip.dat"
+      (Type "Report")
+      (DisplayName "pstchip.dat"))
+    (File ".\dev.bom"
+      (Type "Report"))
+    (File ".\dev.drc"
+      (Type "Report")))
+  (Folder "PSpice Resources"
+    (Folder "Simulation Profiles")
+    (Folder "Model Libraries")
+    (Folder "Stimulus Files")
+    (Folder "Include Files"))
+  (DefaultLibraryBrowseDirectory "library\PSpice")
+  (MPSSessionName "batydm")
+  (GlobalState
+    (FileView
+      (Path "Design Resources")
+      (Path "Design Resources"
+         "C:\Users\batydm\Documents\Courses\Quad\trunk\pcb\dev.dsn")
+      (Path "Outputs")
+      (Path "PSpice Resources")
+      (Select "Design Resources"))
+    (HierarchyView)
+    (Doc
+      (Type "COrCapturePMDoc")
+      (Frame
+        (Placement "44 0 1 -1 -1 -8 -30 0 299 0 510"))
+      (Tab 0))
+    (Doc
+      (Type "COrSchematicDoc")
+      (Frame
+        (Placement "44 0 1 -1 -1 -8 -30 25 996 25 488")
+        (Scroll "0 18")
+        (Zoom "47")
+        (Occurrence "/"))
+      (Path "C:\USERS\BATYDM\DOCUMENTS\COURSES\QUAD\TRUNK\PCB\DEV.DSN")
+      (Schematic "SCHEMATIC1")
+      (Page "USB/Ethernet"))
+    (Doc
+      (Type "COrSchematicDoc")
+      (Frame
+        (Placement "44 2 3 -1 -1 -8 -30 50 1021 50 513")
+        (Scroll "-277 0")
+        (Zoom "100")
+        (Occurrence "/"))
+      (Path "C:\USERS\BATYDM\DOCUMENTS\COURSES\QUAD\TRUNK\PCB\DEV.DSN")
+      (Schematic "SCHEMATIC1")
+      (Page "Battery Charger"))
+    (Doc
+      (Type "COrSchematicDoc")
+      (Frame
+        (Placement "44 0 1 -1 -1 -8 -30 75 1046 75 538")
+        (Scroll "0 11")
+        (Zoom "111")
+        (Occurrence "/"))
+      (Path "C:\USERS\BATYDM\DOCUMENTS\COURSES\QUAD\TRUNK\PCB\DEV.DSN")
+      (Schematic "SCHEMATIC1")
+      (Page "Power"))
+    (Doc
+      (Type "COrSchematicDoc")
+      (Frame
+        (Placement "44 0 1 -1 -1 -8 -30 150 1121 150 613")
+        (Scroll "0 0")
+        (Zoom "105")
+        (Occurrence "/"))
+      (Path "C:\USERS\BATYDM\DOCUMENTS\COURSES\QUAD\TRUNK\PCB\DEV.DSN")
+      (Schematic "SCHEMATIC1")
+      (Page "Components"))
+    (Doc
+      (Type "COrSchematicDoc")
+      (Frame
+        (Placement "44 0 1 -1 -1 -8 -30 200 1171 200 663")
+        (Scroll "0 0")
+        (Zoom "105")
+        (Occurrence "/"))
+      (Path "C:\USERS\BATYDM\DOCUMENTS\COURSES\QUAD\TRUNK\PCB\DEV.DSN")
+      (Schematic "SCHEMATIC1")
+      (Page "Indicators"))
+    (Doc
+      (Type "COrSchematicDoc")
+      (Frame
+        (Placement "44 0 1 -1 -1 -8 -30 225 1196 225 688")
+        (Scroll "0 176")
+        (Zoom "222")
+        (Occurrence "/"))
+      (Path "C:\USERS\BATYDM\DOCUMENTS\COURSES\QUAD\TRUNK\PCB\DEV.DSN")
+      (Schematic "SCHEMATIC1")
+      (Page "External Connectors"))
+    (Doc
+      (Type "COrSchematicDoc")
+      (Frame
+        (Placement "44 0 1 -1 -1 -8 -30 0 971 0 463")
+        (Scroll "0 0")
+        (Zoom "111")
+        (Occurrence "/"))
+      (Path "C:\USERS\BATYDM\DOCUMENTS\COURSES\QUAD\TRUNK\PCB\DEV.DSN")
+      (Schematic "SCHEMATIC1")
+      (Page "Sensors"))
+    (Doc
+      (Type "COrSchematicDoc")
+      (Frame
+        (Placement "44 0 1 -1 -1 -8 -30 25 1317 25 577")
+        (Scroll "-112 0")
+        (Zoom "105")
+        (Occurrence "/"))
+      (Path "C:\USERS\BATYDM\DOCUMENTS\COURSES\QUAD\TRUNK\PCB\DEV.DSN")
+      (Schematic "SCHEMATIC1")
+      (Page "Beagle Board"))) >>>>>>> .r66
+  (HierarchyView)
+  (Doc
+    (Type "COrCapturePMDoc")
+    (Frame
+      (Placement "44 0 1 -1 -1 -8 -30 147 1091 40 717"))
+    (Tab 0))
+  (Doc
+    (Type "COrSchematicDoc")
+    (Frame <<<<<<< .mine
+      (Placement "44 2 3 -1 -1 -8 -30 300 1871 300 959")
+      (Scroll "0 0")
+      (Zoom "162") =======
+      (Placement "44 0 1 -1 -1 -4 -23 66 1673 66 618")
+      (Scroll "-265 17")
+      (Zoom "107") >>>>>>> .r66
+      (Occurrence "/"))
+    (Path "C:\USERS\BATYDM\DOCUMENTS\COURSES\QUAD\TRUNK\PCB\DEV.DSN")
+    (Schematic "SCHEMATIC1")
+    (Page "Battery Charger"))
+  (Doc
+    (Type "COrSchematicDoc")
+    (Frame <<<<<<< .mine
+      (Placement "44 0 1 -1 -1 -8 -30 150 1429 150 809")
+      (Scroll "-4 0")
+      (Zoom "126") =======
+      (Placement "44 0 1 -1 -1 -4 -23 110 1717 110 662")
+      (Scroll "-265 17")
+      (Zoom "107") >>>>>>> .r66
+      (Occurrence "/"))
+    (Path "C:\USERS\BATYDM\DOCUMENTS\COURSES\QUAD\TRUNK\PCB\DEV.DSN")
+    (Schematic "SCHEMATIC1") <<<<<<< .mine
+    (Page "Beagle Board"))
+  (ISPCBBASICLICENSE "false")
+  (PartMRUSelector
+    (0
+      (LibraryName "C:\ORCAD\ORCAD_16.2\TOOLS\CAPTURE\LIBRARY\CAPSYM.OLB")
+      (DeviceIndex "0"))
+    (C
+      (FullPartName "C.Normal")
+      (LibraryName
+         "C:\ORCAD\ORCAD_16.0\TOOLS\CAPTURE\LIBRARY\PSPICE\ANALOG.OLB")
+      (DeviceIndex "0"))
+    (OFFPAGELEFT-L
+      (LibraryName "C:\ORCAD\ORCAD_16.2\TOOLS\CAPTURE\LIBRARY\CAPSYM.OLB")
+      (DeviceIndex "0"))
+    (CON3
+      (FullPartName "CON3.Normal")
+      (LibraryName "C:\ORCAD\ORCAD_16.2\TOOLS\CAPTURE\LIBRARY\CONNECTOR.OLB")
+      (DeviceIndex "0"))
+    (TPS79118
+      (FullPartName "TPS79118.Normal")
+      (LibraryName "C:\USERS\BATYDM\DOCUMENTS\COURSES\QUAD\TRUNK\PCB\DEV.OLB")
+      (DeviceIndex "0"))
+    (LED
+      (FullPartName "LED.Normal")
+      (LibraryName "C:\ORCAD\ORCAD_16.2\TOOLS\CAPTURE\LIBRARY\DISCRETE.OLB")
+      (DeviceIndex "0"))
+    (R
+      (FullPartName "R.Normal")
+      (LibraryName
+         "C:\ORCAD\ORCAD_16.2\TOOLS\CAPTURE\LIBRARY\PSPICE\ANALOG.OLB")
+      (DeviceIndex "0"))
+    (GND
+      (LibraryName "C:\ORCAD\ORCAD_16.2\TOOLS\CAPTURE\LIBRARY\CAPSYM.OLB")
+      (DeviceIndex "0"))
+    (D1N4001
+      (FullPartName "D1N4001.Normal")
+      (LibraryName "C:\ORCAD\ORCAD_16.2\TOOLS\CAPTURE\LIBRARY\PSPICE\DIODE.OLB")
+      (DeviceIndex "0"))
+    (CON2
+      (FullPartName "CON2.Normal")
+      (LibraryName "C:\ORCAD\ORCAD_16.0\TOOLS\CAPTURE\LIBRARY\CONNECTOR.OLB")
+      (DeviceIndex "0"))
+    ("SW PUSHBUTTON-SPST"
+      (FullPartName "SW PUSHBUTTON-SPST.Normal")
+      (LibraryName "C:\ORCAD\ORCAD_16.2\TOOLS\CAPTURE\LIBRARY\DISCRETE.OLB")
+      (DeviceIndex "0"))))

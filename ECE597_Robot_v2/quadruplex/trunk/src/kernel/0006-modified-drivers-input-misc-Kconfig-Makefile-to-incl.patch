@@ -1,0 +1,63 @@
+From 1e2cef0c6e096f0d7d240da0cbf2e67d590ebd51 Mon Sep 17 00:00:00 2001
+From: Michael Auchter <michael.auchter@gmail.com>
+Date: Sat, 30 Jan 2010 15:34:25 +0000
+Subject: [PATCH 6/9] modified drivers/input/misc/{Kconfig,Makefile} to include adxl34x
+
+---
+ drivers/input/misc/Kconfig  |   28 ++++++++++++++++++++++++++++
+ drivers/input/misc/Makefile |    3 ++-
+ 2 files changed, 30 insertions(+), 1 deletions(-)
+
+diff --git a/drivers/input/misc/Kconfig b/drivers/input/misc/Kconfig
+index 16ec523..e11d458 100644
+--- a/drivers/input/misc/Kconfig
++++ b/drivers/input/misc/Kconfig
+@@ -40,6 +40,34 @@ config INPUT_M68K_BEEP
+ 	tristate "M68k Beeper support"
+ 	depends on M68K
+ 
++config INPUT_ADXL34X
++	tristate "Analog Devices ADXL34x Three-Axis Digital Accelerometer"
++	default n
++	help
++	  Say Y here if you have a Accelerometer interface using the
++	  ADXL345/6 controller, and your board-specific initialization
++	  code includes that in its table of devices.
++
++	  This driver can use either I2C or SPI communication to the
++	  ADXL345/6 controller.  Select the appropriate method for
++	  your system.
++
++	  If unsure, say N (but it's safe to say "Y").
++
++	  To compile this driver as a module, choose M here: the
++	  module will be called adxl34x.
++
++config INPUT_ADXL34X_I2C
++	tristate "support I2C bus connection"
++	depends on INPUT_ADXL34X && I2C
++	default y
++	help
++	  Say Y here if you have ADXL345/6 hooked to an I2C bus.
++
++	  To compile this driver as a module, choose M here: the
++	  module will be called adxl34x-i2c.
++
++
+ config INPUT_APANEL
+ 	tristate "Fujitsu Lifebook Application Panel buttons"
+ 	depends on X86 && I2C && LEDS_CLASS
+diff --git a/drivers/input/misc/Makefile b/drivers/input/misc/Makefile
+index a8b8485..bbbe40d 100644
+--- a/drivers/input/misc/Makefile
++++ b/drivers/input/misc/Makefile
+@@ -30,4 +30,5 @@ obj-$(CONFIG_INPUT_WINBOND_CIR)		+= winbond-cir.o
+ obj-$(CONFIG_INPUT_WISTRON_BTNS)	+= wistron_btns.o
+ obj-$(CONFIG_INPUT_WM831X_ON)		+= wm831x-on.o
+ obj-$(CONFIG_INPUT_YEALINK)		+= yealink.o
+-
++obj-$(CONFIG_INPUT_ADXL34X)		+= adxl34x.o
++obj-$(CONFIG_INPUT_ADXL34X_I2C)		+= adxl34x-i2c.o
+-- 
+1.6.4.4
+

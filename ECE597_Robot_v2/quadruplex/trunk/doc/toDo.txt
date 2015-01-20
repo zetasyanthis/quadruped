@@ -1,0 +1,59 @@
+Software
+==============
+
+Semi-iterative motion
+---------------------
+
+ - Calculate planned foot position
+    - Accelerometer's gravity reference
+    - Stability triangle
+        - with center of gravity changes
+
+ - Attempt to place foot, halting once ground contact is made
+    - Test accelerometer for floor impact detection(?)
+    - Foot contact sensors
+
+ - Develop vision software for detecting obstacles
+
+ - Framework so this thing actually operates quickly enough
+
+ - Set up code to properly deal with errors
+
+Hardware
+========
+
+Current Board
+-------------
+
+ - RS-485 Long Packet Test
+ - I2C Implementation
+    - I/O Expander
+    - Accelerometer
+ - USB Fixes
+
+Foot Sensors
+------------
+
+ - Solder
+ - Assemble
+ - Test
+
+Revised Board
+-------------
+
+ - Footprint Check
+	- Power Page
+		- do214ab_SMC for D20 insufficiently wide
+		- dual U10 on BOM?
+		- missing barrel5_5 (J22), sot223-5 (U10) footprints
+	- Battery Charger Page
+		- D1 uses insufficiently wide SMB footprint... documentation seems to indicate SMB and do214aa_smb are the same, recommend a swap to it.  (do214aa doesn't seem to be the same as the other two... !?!)
+	- USB/Ethernet Page
+		- For the love of christ, rename USB_female to USB_B_female before I hurt you.  There are >10 different USB standards, including a very common A female.
+		- missing ethernet (T1) footprint
+ - Layout Check
+	- Seperation of 3.3V plane underneath hub IC
+	- Width of power trace to 3.3V regulator vs. width after.  (Go with thicker trace.)
+	- Dual, but non parallel vias between usb ground and main ground don't help.
+	- Check inner_power layer for strange overlaps...
+	- What's going on with the vias?  They seem to go through many layers and perhaps touch them...  See under lan9512 in particular

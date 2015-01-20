@@ -1,0 +1,57 @@
+From 2d3be77b128ac22751600088c004423a670d4b88 Mon Sep 17 00:00:00 2001
+From: Michael Auchter <michael.auchter@gmail.com>
+Date: Sat, 30 Jan 2010 02:40:34 +0000
+Subject: [PATCH 4/9] board-omap3beagle: added support for pca8574a on i2c bus
+
+---
+ arch/arm/mach-omap2/board-omap3beagle.c |   20 ++++++++++++++++++++
+ 1 files changed, 20 insertions(+), 0 deletions(-)
+
+diff --git a/arch/arm/mach-omap2/board-omap3beagle.c b/arch/arm/mach-omap2/board-omap3beagle.c
+index 079cda5..f1706fc 100644
+--- a/arch/arm/mach-omap2/board-omap3beagle.c
++++ b/arch/arm/mach-omap2/board-omap3beagle.c
+@@ -44,6 +44,8 @@
+ #include <plat/usb.h>
+ #include <plat/timer-gp.h>
+ 
++#include <linux/i2c/pcf857x.h>
++
+ #include "mux.h"
+ #include "mmc-twl4030.h"
+ 
+@@ -286,6 +288,22 @@ static struct i2c_board_info __initdata beagle_i2c_boardinfo[] = {
+ 	},
+ };
+ 
++/* IO Expander */
++static struct pcf857x_platform_data pcf_data = {
++	.gpio_base = OMAP_MAX_GPIO_LINES + TWL4030_GPIO_MAX + 2, /* uh, yeah... */
++	.n_latch = 0,
++	.setup = NULL,
++	.teardown = NULL,
++};
++
++static struct i2c_board_info __initdata beagle_i2c2_boardinfo[] = {
++	{
++		I2C_BOARD_INFO("pcf8574a", 0x38),
++		.flags = I2C_CLIENT_WAKE, 
++		.platform_data = &pcf_data,
++	},
++};
++
+ static int __init omap3_beagle_i2c_init(void)
+ {
+ 	omap_register_i2c_bus(1, 2600, beagle_i2c_boardinfo,
+@@ -293,6 +311,8 @@ static int __init omap3_beagle_i2c_init(void)
+ 	/* Bus 3 is attached to the DVI port where devices like the pico DLP
+ 	 * projector don't work reliably with 400kHz */
+ 	omap_register_i2c_bus(3, 100, NULL, 0);
++	omap_register_i2c_bus(2, 100, beagle_i2c2_boardinfo, 
++			ARRAY_SIZE(beagle_i2c2_boardinfo));
+ 	return 0;
+ }
+ 
+-- 
+1.6.4.4
+

@@ -1,0 +1,4 @@
+/**
+*	\dir kinematics
+*	This directory contains functions related to forward and inverse kinematics.  
+*/

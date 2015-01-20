@@ -1,0 +1,45 @@
+// Pseudo-C defining walking motion
+
+float current_pos[4][3];
+float target_pos[4][3];
+gen_foot_targets(target_pos, current_pos, distance, angle);
+
+for_each_leg() {
+	current_cog = get_current_cog();
+	selected_leg = choose_leg();
+	float foot_delta[3] = target_pos[selected_leg] - current_pos[selected_leg];
+
+	float shift_delta[3] = current_cog - center_of_stability_triangle_once_foot_lifts;
+
+	// Compensate foot_delta for loss it distance because of the shift back:
+	foot_delta = foot_delta - shift_delta; // they are opposites, so they add
+
+	// TODO: Make number of timesteps vary with the length of the step
+	for (float t = 0.0; t <= 1.0; t += 0.1) {
+		float frame[4][3];
+		for_each_leg(leg) {
+			if (leg == selected_leg) {
+				frame[leg] = interpolate_arc(current_pos[leg], current_pos[leg] + foot_delta, t);
+			} else {
+				frame[leg] = interpolate_line(current_pos[leg], current_pos[leg] + shift_delta, t);
+			}
+		}
+
+		do_movement(frame); // Waits for completion
+	}
+}
+
+function choose_leg() {
+	if (first step) {
+		return leg in direction we are moving;
+	} else if (second step) {
+		return leg opposite of first leg;
+	} else if (third step) {
+		return leg on same side as first leg;
+	} else {
+		return leg on same face as first leg;
+	}
+}
+
+
+

@@ -1,0 +1,71 @@
+==== 1. Determine which pin you wish to mux, and which setting you'd like to use ====
+      
+Take a look at the BeagleBoard System Reference Manual, section 8.19, and
+figure out which pin (2&ndash;24) on the expansion header you'd like to
+configure, and to which setting you'd like it to be set.  The newer
+versions of the SRM are preferable, since they list the name of the ball
+on the OMAP associated with that pin (under the OMAP column).  (N.B.: I'm
+using the C4 SRM, page 96.)
+
+==== 2. Figure out the name the kernel uses for that ball ====
+
+In your kernel tree, open up the file arch/arm/mach-omap2/mux34xx.c.  This
+contains a bunch of preprocessor magic which is intended to make your life
+easier (it is an improvement over 2.6.29...  I'm using 2.6.32 for this).
+
+First locate the appropriate ball definition for the OMAP package being used.
+The following are available:
+
+  ~/omap-2.6.32 $ grep -n omap_ball arch/arm/mach-omap2/mux34xx.c
+  677:struct omap_ball __initdata omap3_cbc_ball[] = {
+  1033:struct omap_ball __initdata omap3_cus_ball[] = {
+  1346:struct omap_ball __initdata omap3_cbb_ball[] = {
+  1774:struct omap_ball __initdata omap36xx_cbp_ball[] = {
+  2071:   struct omap_ball *package_balls;
+
+The C4 BeagleBoard uses a CBB (the full chip number is OMAP3530DCBB72 according
+to p. 18 of the C4 SRM, which has a CBB package
+[http://focus.ti.com/docs/prod/folders/print/omap3530.html]).  So the correct
+ball definition may be found starting on line 1346 at the definition of the 
+omap3_cbb_ball array.
+
+Using the name of the ball that you found in step one (it'll typically be
+2 letters followed by 1 or 2 numbers), search for the
+lowercase (e.g., if the ball name was AE5, search for ae5).   This will bring
+you to a line with a _OMAP3_BALLENTRY() macro; the first parameter is what
+you're interested in, so remember it.  In the case of AE5, the first parameter
+is MCBSP3_FSX.
+
+==== 3. Add an entry for each ball you wish to configure to the board_mux array ====
+
+Search through arch/arm/mach-omap2/board-omap3beagle.c until you find an
+array of type struct omap_board_mux called board_mux.  This will likely be
+in a block conditional on CONFIG_OMAP_MUX, so you need to have the
+CONFIG_OMAP_MUX option set in your kernel config.  There will likely only
+be one entry, which will look like: 
+
+  {.reg_offset = OMAP_MUX_TERMINATOR },  
+
+You will add one entry for each ball to this array, before that
+terminating element.  
+
+To do this, use the OMAP3_MUX() helper macro, which takes two parameters;
+the first is the name you found in the previous step (e.g. MCBSP_FSX), and
+the second is the mux mode you desire.  This mux mode takes the form of
+OMAP_MUX_MODEx, where x is the mode.
+
+As an all encompassing example, say you want to set pin 8 on the expansion
+header to mode 1, in order to have UART2_RX muxed in on that pin.  You
+would add: 
+
+  OMAP3_MUX(MCBSP3_FSX, OMAP_MUX_MODE1), 
+
+to the board_mux[] array.
+
+But, if you were to try that, it wouldn't work!  That's because a UART2_RX
+must be set as an input in order to receive data.  So, take a look at
+arch/arm/mach-omap2/mux.h, which defines the valid modes to be used in the
+OMAP3_MUX helper.  In this example, we want OMAP_PIN_INPUT, but your
+application may differ.  So, the correct addition would be:
+
+  OMAP3_MUX(MCBSP3_FSX, OMAP_MUX_MODE1 | OMAP_PIN_INPUT)

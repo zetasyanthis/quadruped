@@ -1,0 +1,5 @@
+SMSC USB Ethernet adapter (hardcoded in Kernel):
+00:80:0f:11:70:00
+
+The USB Ethernet adapter:
+00:50:B6:06:17:05
